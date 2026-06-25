@@ -91,9 +91,10 @@ variable "decrypters" {
 }
 
 variable "key_rotation_period" {
-  description = "Generate a new key every time this period passes."
+  description = "Generate a new key every time this period passes. Set to null for asymmetric keys — GCP does not support automatic rotation for ASYMMETRIC_SIGN or ASYMMETRIC_DECRYPT purposes."
   type        = string
   default     = "7776000s"
+  nullable    = true
 }
 
 variable "key_algorithm" {
