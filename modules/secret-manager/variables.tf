@@ -42,3 +42,11 @@ variable "accessors" {
   type        = list(string)
   default     = []
 }
+
+variable "secret_data" {
+  description = "Optional initial secret version. If set, creates a version immediately after the container."
+  type        = string
+  default     = null
+  nullable    = true
+  sensitive   = true
+}
