@@ -38,3 +38,27 @@ variable "spec" {
   })
   default = null
 }
+
+variable "context_spec" {
+  description = <<-EOT
+    Optional Reasoning Engine context spec. When null (the default), NO
+    context_spec block is created. Set memory_bank_config to declare a Vertex
+    Memory Bank configuration that lives on the engine — most commonly
+    generation_config.model (the model used to generate/summarize memories,
+    e.g. "gemini-3.5-flash"). Some ADK agent-deploy flows set this out-of-band;
+    declaring it here keeps Terraform in sync instead of nulling it on apply.
+    Leave null for parent-only engines with no Memory Bank.
+  EOT
+  type = object({
+    memory_bank_config = optional(object({
+      disable_memory_revisions = optional(bool)
+      generation_config        = optional(object({ model = string }))
+      similarity_search_config = optional(object({ embedding_model = string }))
+      ttl_config = optional(object({
+        default_ttl                 = optional(string)
+        memory_revision_default_ttl = optional(string)
+      }))
+    }))
+  })
+  default = null
+}
